@@ -81,7 +81,7 @@
           <hr>
          </li>
         {#each data.data as section (section.documentId)}
-          <li class="mt-1">
+          <li>
             {#if !section.pages.length && !section.sub_sections.length} 
               <a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="/{section.slug}">{section.title}</a>
             {:else}
@@ -94,21 +94,27 @@
                   {/each}
                 </ul>
               {/if}
+              {#if section.sub_sections.length}
+                <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
+                  {#each section.sub_sections! as sub_sections}
+                    <li>
+                      <details open>
+                        <summary><a class="{currentSlug === sub_sections.slug ? 'menu-active' : ''}" href="/{section.slug}/{sub_sections.slug}">{sub_sections.title}</a></summary>
+        
+                        {#if sub_sections.pages?.length}
+                          <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
+                            {#each sub_sections.pages as page}
+                              <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="/{section.slug}/{sub_sections.slug}/{page.slug}">{page.title}</a></li>
+                            {/each}
+                          </ul>
+                        {/if}
+                      </details>
+                    </li>
+                  {/each}
+                </ul>
+              {/if}
             </details>
             {/if}
-            {#each section.sub_sections! as sub_sections}
-              <details open>
-                <summary><a class="{currentSlug === sub_sections.slug ? 'menu-active' : ''}" href="/{section.slug}/{sub_sections.slug}">{sub_sections.title}</a></summary>
-
-                {#if sub_sections.pages?.length}
-                  <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
-                    {#each sub_sections.pages as page}
-                      <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="/{section.slug}/{sub_sections.slug}/{page.slug}">{page.title}</a></li>
-                    {/each}
-                  </ul>
-                {/if}
-              </details>
-            {/each}
           </li>
         {/each}
       </ul>
