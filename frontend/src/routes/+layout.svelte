@@ -3,8 +3,8 @@
 	import type {LayoutProps} from './$types';
   import { page as currentPage } from '$app/state';
   import {theme} from '$lib/stores/theme';
-  import logo from '$lib/assets/Kingsoft_Logo.png'
-  import {PUBLIC_PROJECT, PUBLIC_BASE_URL} from '$env/static/public';
+  import logo from '$lib/assets/company_logo.png'
+  import {PUBLIC_PROJECT, PUBLIC_BASE_URL, PUBLIC_BRAND_NAME} from '$env/static/public';
 
 	let { data, children }: LayoutProps = $props();
   
@@ -77,7 +77,7 @@
             <img src={logo} alt="Company Logo" class="h-10 w-auto sm:h-10" />
             <!-- Brand Name: hidden on small screens, visible on md and larger -->
             <span class="hidden md:inline ml-2 text-xl font-bold">
-              Kingsoft Company
+              {PUBLIC_BRAND_NAME}
             </span>
           </a>
           <hr>
