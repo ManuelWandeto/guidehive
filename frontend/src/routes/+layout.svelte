@@ -4,6 +4,8 @@
   import { page as currentPage } from '$app/state';
   import {theme} from '$lib/stores/theme';
   import logo from '$lib/assets/Kingsoft_Logo.png'
+  import {PUBLIC_PROJECT, PUBLIC_BASE_URL} from '$env/static/public';
+
 	let { data, children }: LayoutProps = $props();
   
   // Create a reactive derived variable for segments
@@ -26,7 +28,7 @@
           </label>
         </div>
         <div class="flex-1">
-          <span class="btn btn-ghost text-xl">Hotelex - {currentPage.data.data[0].title}</span>
+          <span class="btn btn-ghost text-xl">{PUBLIC_PROJECT}</span>
         </div>
         <div class="flex-none">
           <button aria-label="theme-toggle" >
@@ -83,14 +85,14 @@
         {#each data.data as section (section.documentId)}
           <li>
             {#if !section.pages.length && !section.sub_sections.length} 
-              <a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="/{section.slug}">{section.title}</a>
+              <a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}">{section.title}</a>
             {:else}
             <details open>
-              <summary><a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="/{section.slug}">{section.title}</a></summary>
+              <summary><a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}">{section.title}</a></summary>
               {#if section.pages?.length}
                 <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
                   {#each section.pages as page}
-                    <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="/{section.slug}/{page.slug}">{page.title}</a></li>
+                    <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}/{page.slug}">{page.title}</a></li>
                   {/each}
                 </ul>
               {/if}
@@ -99,12 +101,12 @@
                   {#each section.sub_sections! as sub_sections}
                     <li>
                       <details open>
-                        <summary><a class="{currentSlug === sub_sections.slug ? 'menu-active' : ''}" href="/{section.slug}/{sub_sections.slug}">{sub_sections.title}</a></summary>
+                        <summary><a class="{currentSlug === sub_sections.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}/{sub_sections.slug}">{sub_sections.title}</a></summary>
         
                         {#if sub_sections.pages?.length}
                           <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
                             {#each sub_sections.pages as page}
-                              <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="/{section.slug}/{sub_sections.slug}/{page.slug}">{page.title}</a></li>
+                              <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}/{sub_sections.slug}/{page.slug}">{page.title}</a></li>
                             {/each}
                           </ul>
                         {/if}
