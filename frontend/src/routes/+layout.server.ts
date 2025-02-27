@@ -2,6 +2,7 @@ import type { LayoutServerLoad } from "./$types";
 import type {ApiResponse} from "$lib/interfaces/doc";
 import { error } from '@sveltejs/kit';
 import {APP_ENV, DEV_API_URL, PROD_API_URL} from '$env/static/private';
+import {PUBLIC_PROJECT} from '$env/static/public';
 import {stringify} from 'qs';
 
 export const load: LayoutServerLoad = async({fetch})=>{
@@ -12,7 +13,7 @@ export const load: LayoutServerLoad = async({fetch})=>{
                 is_sub_section: { $ne: 'true' },
                 project: {
                     name: {
-                        $eq: 'hotelex'
+                        $eq: PUBLIC_PROJECT
                     }
                 }
               },
