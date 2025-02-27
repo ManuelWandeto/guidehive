@@ -2,11 +2,44 @@ import type { LayoutServerLoad } from "./$types";
 import type {ApiResponse} from "$lib/interfaces/doc";
 import { error } from '@sveltejs/kit';
 import {APP_ENV, DEV_API_URL, PROD_API_URL} from '$env/static/private';
+import {stringify} from 'qs';
 
 export const load: LayoutServerLoad = async({fetch})=>{
     const api_url = APP_ENV === 'development' ? DEV_API_URL : PROD_API_URL;
     try {
-        const res = await fetch(`${api_url}/api/sections?filters[is_sub_section][$ne]=true&populate[sub_sections][fields][0]=title&populate[sub_sections][fields][1]=slug&populate[sub_sections][populate][pages][fields][0]=title&populate[sub_sections][populate][pages][fields][1]=slug&populate[pages][fields][0]=title&populate[pages][fields][1]=slug&fields[0]=title&fields[1]=slug`)
+        const query = stringify({
+            filters: {
+                is_sub_section: { $ne: 'true' },
+                project: {
+                    name: {
+                        $eq: 'hotelex'
+                    }
+                }
+              },
+            populate: {
+              sub_sections: {
+                sort: ['sidebar_position:asc'],
+                fields: ['title', 'slug'],
+                populate: {
+                  pages: {
+                    sort: ['sidebar_position:asc'],
+                    fields: ['title', 'slug']
+                  }
+                }
+              },
+              pages: {
+                sort: ['sidebar_position:asc'],
+                fields: ['title', 'slug']
+              },
+              project: {
+                fields: ['name']
+              },
+            },
+            sort: ['sidebar_position:asc'],
+            fields: ['title', 'slug']
+          }
+        )
+        const res = await fetch(`${api_url}/api/sections?${query}`)
         const data: ApiResponse = await res.json()
     
         return data;
