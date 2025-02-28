@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({fetch, params, parent, url}) => {
 
     if(!params.slug?.trim()) {
         const {data} = await parent()
-        const redirectUrl = `${url.origin + PUBLIC_BASE_URL}/${data[0].slug}`
+        const redirectUrl = `.${PUBLIC_BASE_URL}/${data[0].slug}`
         
         throw redirect(307, redirectUrl)
     }
