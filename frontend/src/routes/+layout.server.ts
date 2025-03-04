@@ -3,7 +3,7 @@ import type {ApiResponse} from "$lib/interfaces/doc";
 import { error } from '@sveltejs/kit';
 import {APP_ENV, DEV_API_URL, PROD_API_URL} from '$env/static/private';
 import {PUBLIC_PROJECT} from '$env/static/public';
-import {stringify, parse} from 'qs';
+import {stringify} from 'qs';
 
 export const load: LayoutServerLoad = async({fetch})=>{
     const api_url = APP_ENV === 'development' ? DEV_API_URL : PROD_API_URL;
