@@ -4,7 +4,8 @@
   import { page as currentPage } from '$app/state';
   import {theme} from '$lib/stores/theme';
   import logo from '$lib/assets/company_logo.png'
-  import {PUBLIC_PROJECT, PUBLIC_BASE_URL, PUBLIC_BRAND_NAME} from '$env/static/public';
+  import {PUBLIC_PROJECT, PUBLIC_BRAND_NAME} from '$env/static/public';
+  import {base} from '$app/paths';
 
 	let { data, children }: LayoutProps = $props();
   
@@ -85,14 +86,14 @@
         {#each data.data as section (section.documentId)}
           <li>
             {#if !section.pages.length && !section.sub_sections.length} 
-              <a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}">{section.title}</a>
+              <a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="{base}/{section.slug}">{section.title}</a>
             {:else}
             <details open>
-              <summary><a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}">{section.title}</a></summary>
+              <summary><a class="{currentSlug === section.slug ? 'menu-active' : ''}" href="{base}/{section.slug}">{section.title}</a></summary>
               {#if section.pages?.length}
                 <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
                   {#each section.pages as page}
-                    <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}/{page.slug}">{page.title}</a></li>
+                    <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="{base}/{section.slug}/{page.slug}">{page.title}</a></li>
                   {/each}
                 </ul>
               {/if}
@@ -101,12 +102,12 @@
                   {#each section.sub_sections! as sub_sections}
                     <li>
                       <details open>
-                        <summary><a class="{currentSlug === sub_sections.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}/{sub_sections.slug}">{sub_sections.title}</a></summary>
+                        <summary><a class="{currentSlug === sub_sections.slug ? 'menu-active' : ''}" href="{base}/{section.slug}/{sub_sections.slug}">{sub_sections.title}</a></summary>
         
                         {#if sub_sections.pages?.length}
                           <ul class="menu text-base md:text-lg 2xl:text-xl w-full">
                             {#each sub_sections.pages as page}
-                              <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="{PUBLIC_BASE_URL}/{section.slug}/{sub_sections.slug}/{page.slug}">{page.title}</a></li>
+                              <li><a class="{currentSlug === page.slug ? 'menu-active' : ''}" href="{base}/{section.slug}/{sub_sections.slug}/{page.slug}">{page.title}</a></li>
                             {/each}
                           </ul>
                         {/if}

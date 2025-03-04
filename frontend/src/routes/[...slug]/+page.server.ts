@@ -2,7 +2,7 @@ import type { PageApiResponse, SectionApiResponse } from "$lib/interfaces/doc";
 import type { PageServerLoad } from "./$types";
 import { error, redirect } from '@sveltejs/kit';
 import {APP_ENV, DEV_API_URL, PROD_API_URL} from '$env/static/private';
-import {PUBLIC_BASE_URL} from '$env/static/public';
+import {base} from '$app/paths';
 
 
 export const load: PageServerLoad = async ({fetch, params, parent, url}) => {
@@ -10,8 +10,8 @@ export const load: PageServerLoad = async ({fetch, params, parent, url}) => {
 
     if(!params.slug?.trim()) {
         const {data} = await parent()
-        const redirectUrl = `.${PUBLIC_BASE_URL}/${data[0].slug}`
-        
+        const redirectUrl = `${base}/${data[0].slug}`
+    
         throw redirect(307, redirectUrl)
     }
     const slug = params.slug?.split('/').pop()
