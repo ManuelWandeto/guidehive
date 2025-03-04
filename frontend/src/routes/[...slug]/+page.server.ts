@@ -10,6 +10,9 @@ export const load: PageServerLoad = async ({fetch, params, parent, url}) => {
 
     if(!params.slug?.trim()) {
         const {data} = await parent()
+        if(!data?.length) {
+            error(500, 'NO DATA FOUND')
+        }
         const redirectUrl = `${base}/${data[0].slug}`
     
         throw redirect(307, redirectUrl)
